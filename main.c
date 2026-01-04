@@ -6,7 +6,7 @@
  * @argv: Argument vector
  * @env: Environment variables
  *
- * Return: 0 on success
+ * Return: 0 on exit, or status of last command
  */
 int main(int argc, char **argv, char **env)
 {
@@ -30,7 +30,6 @@ int main(int argc, char **argv, char **env)
 				printf("\n");
 			break;
 		}
-
 		line_count++;
 
 		args = split_line(line);
@@ -40,7 +39,6 @@ int main(int argc, char **argv, char **env)
 			free_array(args);
 			continue;
 		}
-
 		status = execute_cmd(args, env, argv[0], line_count);
 
 		free(line);
@@ -49,5 +47,7 @@ int main(int argc, char **argv, char **env)
 		if (status == -1)
 			break;
 	}
-	return (0);
+	if (status == -1)
+		return (0);
+	return (status);
 }
