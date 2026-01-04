@@ -1,6 +1,22 @@
 #include "shell.h"
 
 /**
+ * run_child - Execute command in child process
+ * @cmd_path: Full path to command
+ * @args: Array of arguments
+ * @env: Environment variables
+ */
+void run_child(char *cmd_path, char **args, char **env)
+{
+	if (execve(cmd_path, args, env) == -1)
+	{
+		perror(args[0]);
+		free(cmd_path);
+		exit(127);
+	}
+}
+
+/**
  * execute_cmd - Execute a command
  * @args: Array of arguments
  * @env: Environment variables
@@ -34,22 +50,13 @@ int execute_cmd(char **args, char **env, char *prog_name, int line_count)
 	}
 
 	if (pid == 0)
-	{
-		if (execve(cmd_path, args, env) == -1)
-		{
-			perror(prog_name);
-			free(cmd_path);
-			exit(127);
-		}
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		free(cmd_path);
+		run_child(cmd_path, args, env);
 
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-	}
+	wait(&status);
+	free(cmd_path);
+
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
 
 	return (0);
 }
