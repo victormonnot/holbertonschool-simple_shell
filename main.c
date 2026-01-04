@@ -6,14 +6,13 @@
  * @argv: Argument vector
  * @env: Environment variables
  *
- * Return: 0 on success, 1 on error
+ * Return: 0 on success
  */
 int main(int argc, char **argv, char **env)
 {
 	char *line = NULL;
 	char **args = NULL;
 	int status = 0;
-	int last_status = 0;
 	int line_count = 0;
 	int interactive = isatty(STDIN_FILENO);
 
@@ -34,12 +33,6 @@ int main(int argc, char **argv, char **env)
 
 		line_count++;
 
-		if (line[0] == '\0' || line[0] == '\n')
-		{
-			free(line);
-			continue;
-		}
-
 		args = split_line(line);
 		if (args == NULL || args[0] == NULL)
 		{
@@ -55,9 +48,6 @@ int main(int argc, char **argv, char **env)
 
 		if (status == -1)
 			break;
-
-		last_status = status;
 	}
-
-	return (last_status);
+	return (0);
 }
