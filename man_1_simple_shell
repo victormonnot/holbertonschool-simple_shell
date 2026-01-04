@@ -1,0 +1,83 @@
+.TH HSH 1 "January 2026" "1.0" "Simple Shell Manual"
+.SH NAME
+hsh \- simple UNIX command line interpreter
+.SH SYNOPSIS
+.B hsh
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command line interpreter that executes commands read from
+standard input or from a file.
+.PP
+The shell displays a prompt and waits for the user to type a command. A
+command line always ends with a new line. The prompt is displayed again
+each time a command has been executed.
+.PP
+The shell works in both interactive and non-interactive mode.
+.SH INVOCATION
+.B Interactive mode:
+When
+.B hsh
+is started with its standard input connected to a terminal (as determined
+by isatty(3)), it displays a prompt and waits for user input.
+.PP
+.B Non-interactive mode:
+When
+.B hsh
+is started with its standard input not connected to a terminal, it reads
+and executes commands from standard input.
+.SH COMMAND EXECUTION
+After a command is parsed, the shell checks if the command is a built-in.
+If it is not a built-in, the shell searches for a command with that name
+in the directories listed in the PATH environment variable.
+.PP
+If the command contains a slash (/), the shell executes the command at
+the specified path without searching PATH.
+.SH BUILT-IN COMMANDS
+The following built-in commands are supported:
+.TP
+.B exit
+Exit the shell. Usage:
+.B exit
+.TP
+.B env
+Print the current environment variables, one per line.
+.SH EXIT STATUS
+.B hsh
+returns the exit status of the last command executed, or 127 if the
+command is not found.
+.SH ENVIRONMENT
+.TP
+.B PATH
+A colon-separated list of directories in which the shell looks for commands.
+.SH EXAMPLES
+.PP
+Interactive mode:
+.PP
+.RS
+.nf
+$ ./hsh
+$ ls -la
+$ /bin/pwd
+$ env
+$ exit
+.fi
+.RE
+.PP
+Non-interactive mode:
+.PP
+.RS
+.nf
+$ echo "ls -la" | ./hsh
+$ cat commands.txt | ./hsh
+.fi
+.RE
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2)
+.SH BUGS
+No known bugs. Report bugs to the authors.
+.SH AUTHORS
+Holberton School Student
