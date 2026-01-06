@@ -26,7 +26,7 @@
 
 This project is a custom UNIX command-line interpreter built as part of the Holberton School curriculum. The shell replicates the core behavior of `/bin/sh`, allowing users to execute commands, manage processes, and interact with the operating system through a simple prompt.
 
-It supports both interactive mode (typing commands directly) and non-interactive mode (piping commands from files or other programs). Built entirely in C, this project demonstrates fundamental concepts of system programming including process creation, program execution, and environment management.
+It supports both interactive mode (typing commands directly) and non-interactive mode (piping commands from files or other programs). Built entirely in C, this project demonstrates fundamental concepts of system programming including process creation, program execution, and environment manafgement.
 
 ---
 
@@ -114,7 +114,59 @@ $ cat commands.txt | ./hsh
 
 ---
 
-## Flowchart
+## 📊 How It Works - Simple Overview
+
+```
+                            ┌──────────────────────────────────────────────────────┐
+                            │                                                      │
+                            ▼                                                      │
+┌─────────────────────────────────────────────────────────────┐                    │
+│                      MAIN LOOP                              │                    │
+│                      while (1)                              │                    │
+└─────────────────────────────────────────────────────────────┘                    │
+                            │                                                      │
+                            ▼                                                      │
+┌─────────────────────────────────────────────────────────────┐                    │
+│  PHASE 1: INPUT                                             │                    │
+│  ─────────────────                                          │                    │
+│  • Display prompt "$"                                       │                    │
+│  • read_line() → getline()                                  │                    │
+│  • EOF (Ctrl+D)? → Exit shell                               │                    │
+└─────────────────────────────────────────────────────────────┘                    │
+                            │                                                      │
+                            ▼                                                      │
+┌─────────────────────────────────────────────────────────────┐                    │
+│  PHASE 2: PARSING                                           │                    │
+│  ─────────────────                                          │                    │
+│  • split_line() → strtok()                                  │                    │
+│  • "ls -l" → { "ls", "-l", NULL }                           │                    │
+└─────────────────────────────────────────────────────────────┘                    │
+                            │                                                      │
+                            ▼                                                      │
+┌─────────────────────────────────────────────────────────────┐                    │
+│  PHASE 3: ROUTING                                           │                    │
+│  ─────────────────                                          │                    │
+│  • Built-in? (exit/env) → Execute directly                  │                    │
+│  • Absolute path? (/bin/ls) → Ready to exec                 │                    │
+│  • Simple cmd? (ls) → Search in PATH with find_command()    │                    │
+└─────────────────────────────────────────────────────────────┘                    │
+                            │                                                      │
+                            ▼                                                      │
+┌─────────────────────────────────────────────────────────────┐                    │
+│  PHASE 4: EXECUTION                                         │                    │
+│  ─────────────────                                          │                    │
+│  • fork() → Create child process                            │                    │
+│  • CHILD: execve() → Replace with program                   │                    │
+│  • PARENT: wait() → Wait for child to finish                │                    │
+│  • Free memory                                              │                    │
+└─────────────────────────────────────────────────────────────┘                    │
+                            │                                                      │
+                            └──────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📈 Detailed Flowchart
 
 ```mermaid
 flowchart TD
@@ -178,14 +230,14 @@ flowchart TD
 
 | File | Description |
 |------|-------------|
-| `shell.h` | Header file with prototypes and includes |
-| `main.c` | Entry point and main shell loop |
-| `input.c` | Input reading and parsing functions |
-| `executor.c` | Command execution using fork/execve |
-| `path.c` | PATH resolution and command search |
-| `builtins.c` | Built-in commands (exit, env) |
-| `helpers.c` | Helper functions for error handling |
-| `string_utils.c` | String manipulation utilities |
+| [shell.h](shell.h) | Header file with prototypes and includes |
+| [main.c](main.c) | Entry point and main shell loop |
+| [input.c](input.c) | Input reading and parsing functions |
+| [executor.c](executor.c) | Command execution using fork/execve |
+| [path.c](path.c) | PATH resolution and command search |
+| [builtins.c](builtins.c) | Built-in commands (exit, env) |
+| [helpers.c](helpers.c) | Helper functions for error handling |
+| [string_utils.c](string_utils.c) | String manipulation utilities |
 
 ---
 
@@ -231,6 +283,43 @@ $
 ```
 
 ---
+
+## ⚖️ Comparison with /bin/sh
+
+| Feature | /bin/sh | Our Shell |
+|---------|---------|----------|
+| Execute commands | ✅ | ✅ |
+| Commands with arguments | ✅ | ✅ |
+| PATH resolution | ✅ | ✅ |
+| Built-in: exit | ✅ | ✅ |
+| Built-in: env | ✅ | ✅ |
+| Handle Ctrl+D (EOF) | ✅ | ✅ |
+| Error messages format | ✅ | ✅ |
+| Pipes (`\|`) | ✅ | ❌ |
+| Redirections (`>`, `<`) | ✅ | ❌ |
+| Logical operators (`&&`, `\|\|`) | ✅ | ❌ |
+| Variables (`$VAR`) | ✅ | ❌ |
+| Comments (`#`) | ✅ | ❌ |
+
+---
+
+## 📚 What we learned with this project
+
+This project helped us understand:
+
+- **Process creation** with `fork()` and how parent/child processes work
+- **Program execution** with `execve()` and how it replaces process memory
+- **PATH resolution** - searching for executables in system directories
+- **System calls** vs library functions and when to use each
+- **Memory management** - proper allocation and freeing to avoid leaks
+- **String manipulation** in C without relying on all standard functions
+- **Error handling** and providing meaningful error messages
+- **Project structure** - organizing code into logical modules
+- **Teamwork** - collaborating effectively
+- **Git & GitHub** - working together using branches, commits and pull requests
+
+---
+
 ## License
 
 This project is part of the Holberton School curriculum.
@@ -244,5 +333,5 @@ This project was created by students at Holberton School. See the [AUTHORS](AUTH
 ---
 
 <p align="center">
-  Made by <a href="https://github.com/panmusic"><b>Panaki</b></a> & <a href="https://github.com/victormonnot"><b>Victor</b></a>
+  Made by <a href="https://github.com/Panaki-GILLOT"><b>Panaki</b></a> & <a href="https://github.com/victormonnot"><b>Victor</b></a>
 </p>
