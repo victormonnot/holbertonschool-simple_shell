@@ -1,3 +1,12 @@
+```
+ ____  _                 _        ____  _          _ _ 
+/ ___|(_)_ __ ___  _ __ | | ___  / ___|| |__   ___| | |
+\___ \| | '_ ` _ \| '_ \| |/ _ \ \___ \| '_ \ / _ \ | |
+ ___) | | | | | | | |_) | |  __/  ___) | | | |  __/ | |
+|____/|_|_| |_| |_| .__/|_|\___| |____/|_| |_|\___|_|_|
+                  |_|                                   
+```
+
 # Simple Shell
 
 > A simple UNIX command line interpreter written in C for Holberton School.
@@ -70,6 +79,27 @@ $ exit
 ```
 
 Use `Ctrl + D` to exit the shell gracefully.
+
+---
+
+## 🖥️ Usage Modes
+
+### Interactive Mode
+
+```bash
+$ ./hsh
+$ ls -la
+$ pwd
+$ env
+$ exit
+```
+
+### Non-Interactive Mode
+
+```bash
+$ echo "ls -la" | ./hsh
+$ cat commands.txt | ./hsh
+```
 
 ---
 
