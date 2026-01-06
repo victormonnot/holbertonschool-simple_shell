@@ -1,35 +1,77 @@
 # Simple Shell
 
-A simple UNIX command line interpreter written in C for Holberton School.
+> A simple UNIX command line interpreter written in C for Holberton School.
+
+[![Made with C](https://img.shields.io/badge/Made%20with-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Holberton School](https://img.shields.io/badge/Holberton-School-red.svg)](https://www.holbertonschool.fr/)
+
+## 🔧 Technologies Used
+
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![GCC](https://img.shields.io/badge/GCC-333333?style=for-the-badge&logo=gnu&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 ## Description
 
-This project is a basic implementation of a shell that replicates the behavior of `/bin/sh`. It supports both interactive and non-interactive modes.
+This project is a custom UNIX command-line interpreter built as part of the Holberton School curriculum. The shell replicates the core behavior of `/bin/sh`, allowing users to execute commands, manage processes, and interact with the operating system through a simple prompt.
 
-## Compilation
+It supports both interactive mode (typing commands directly) and non-interactive mode (piping commands from files or other programs). Built entirely in C, this project demonstrates fundamental concepts of system programming including process creation, program execution, and environment management.
+
+---
+
+## 📦 Installation & Usage
+
+### Getting Started with Simple Shell
+
+Ready to explore? Follow these steps to get the shell running on your machine!
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/victormonnot/holbertonschool-simple_shell.git
+cd holbertonschool-simple_shell
+```
+
+### Compile the Project
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
-## Usage
+**What do these flags do?**
 
-### Interactive Mode
+| Flag | Purpose |
+|------|---------|
+| `-Wall` | Enable all common warnings |
+| `-Werror` | Treat warnings as errors |
+| `-Wextra` | Enable extra warnings |
+| `-pedantic` | Strict ISO C compliance |
+| `-std=gnu89` | Use GNU C89 standard |
+
+✅ This ensures the code is clean, bug-free, and follows C89 coding standards!
+
+### Launch the Shell
 
 ```bash
-$ ./hsh
-$ ls -la
+./hsh
+```
+
+### 🎉 Ready to Explore!
+
+Try running some basic commands:
+
+```bash
+$ ls
 $ pwd
 $ env
 $ exit
 ```
 
-### Non-Interactive Mode
+Use `Ctrl + D` to exit the shell gracefully.
 
-```bash
-$ echo "ls -la" | ./hsh
-$ cat commands.txt | ./hsh
-```
+---
 
 ## Features
 
@@ -39,6 +81,8 @@ $ cat commands.txt | ./hsh
 - Built-in commands: `exit`, `env`
 - Handle EOF (Ctrl+D)
 - Error handling matching `/bin/sh` behavior
+
+---
 
 ## Flowchart
 
@@ -90,7 +134,7 @@ flowchart TD
         W -->|Non| X["exit 127"]
         W -->|Oui| END1[Programme exécuté]
         
-        U -->|"pid > 0 PARENT"| AA["waitpid attend enfant"]
+        U -->|"pid > 0 PARENT"| AA["wait attend enfant"]
         AA --> Y
     end
 
@@ -98,7 +142,9 @@ flowchart TD
     Z --> END2[Fin du shell]
 ```
 
-## Files
+---
+
+## 📁 Files
 
 | File | Description |
 |------|-------------|
@@ -111,6 +157,8 @@ flowchart TD
 | `helpers.c` | Helper functions for error handling |
 | `string_utils.c` | String manipulation utilities |
 
+---
+
 ## Built-in Commands
 
 | Command | Description |
@@ -118,20 +166,24 @@ flowchart TD
 | `exit` | Exit the shell |
 | `env` | Print the current environment |
 
+---
+
 ## Examples
 
 ```bash
 $ ./hsh
 $ /bin/ls
-file1.c  file2.c  shell.h  main.c
+builtins.c  executor.c  helpers.c  input.c  main.c  path.c  shell.h  string_utils.c
 $ ls -l
 total 32
--rw-r--r-- 1 user user 1234 Jan  4 file1.c
+-rw-r--r-- 1 user user 1234 Jan  5 file1.c
 $ echo hello world
 hello world
 $ exit
 $
 ```
+
+---
 
 ## Error Handling
 
@@ -148,6 +200,19 @@ $ qwerty
 $
 ```
 
+---
 ## License
 
 This project is part of the Holberton School curriculum.
+
+---
+
+## Authors
+
+This project was created by students at Holberton School. See the [AUTHORS](AUTHORS) file for the full list of contributors and contact email addresses.
+
+---
+
+<p align="center">
+  Made by <a href="https://github.com/panmusic"><b>Panaki</b></a> & <a href="https://github.com/victormonnot"><b>Victor</b></a>
+</p>
